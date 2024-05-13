@@ -58,7 +58,7 @@ app.post("/send-email", (req, res) => {
 //connect to db
 mongoose.connect(process.env.MONGO_URI).then(() => {
   //listen for requests
-  app.listen(process.env.PORT, () => {
+  app.listen( 8000 || process.env.PORT, () => {
     console.log("Connect to db & listen to port", process.env.PORT);
   });
 });
