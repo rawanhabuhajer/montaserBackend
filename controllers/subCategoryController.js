@@ -38,22 +38,24 @@ exports.createSubcategory = async (req, res, next) => {
 exports.getSubcategoriesByCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.id;
-    const category = await Category.findById(categoryId).populate(
-      "subcategories"
-    );
+
+    // Find the category by ID and populate its subcategories
+    const category = await Category.findById(categoryId).populate("subcategories");
 
     if (!category) {
       return res.status(404).json({
         status: "error",
-        message: "SubCategory not found",
+        message: "Category not found",
       });
     }
 
     const subcategories = category.subcategories;
+    const categoryName = category.name; // Retrieve the category name
 
     res.status(200).json({
       status: "success",
       data: {
+        categoryName: categoryName, // Include the category name in the response
         subcategories: subcategories,
       },
     });
@@ -66,6 +68,7 @@ exports.getSubcategoriesByCategory = async (req, res, next) => {
     });
   }
 };
+
 exports.getSubCategoryById = async (req, res, next) => {
   try {
     const subcategoryId = req.params.subcategoryId;
